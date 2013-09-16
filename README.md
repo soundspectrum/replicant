@@ -401,26 +401,9 @@ TODO: Discuss the idea of sandboxed system calls under Replicant.
 About the Authors
 -----------------
 
-Andy O'Meara is CTO of SoundSpectrum, a music visualization
-software company founded in 2000, best known for the music
-visualizers G-Force, WhiteCap, and Aeon.  These products are sold
-retail and have also been licensed for use by Apple, Microsoft,
-and various concert production tours. He specializes in realtime
-high-performance computation and graphics and first began to
-conceptualize the need for an alternative Python implementation
-in 2009.  Andy believes in a next-generation Python
-implementation that can reap the benefits of unrestricted
-multi-threading, type inference and analysis, LLVM, and fully
-independent interpreter contexts.
+**Andy O'Meara** is CTO of [SoundSpectrum](http://soundspectrum.com), a music visualization software company founded in 2000, best known for the musicvisualizers G-Force, WhiteCap, and Aeon.  These products are sold retail and have also been licensed for use by Apple, Microsoft, and various concert production tours. He specializes in realtime high-performance computation and graphics and first began to conceptualize the need for an alternative Python implementation in 2009.  Andy believes in a next-generation Python implementation that can reap the benefits of unrestricted multi-threading, type inference and analysis, LLVM, and fully independent interpreter contexts.
 
-Joel Stanley is a staff software designer at SoundSpectrum, Inc.
-He has an academic and professional background in compilers,
-programming languages, simulation frameworks, formal methods, and
-high-assurance software.  Some of his past projects have used
-LLVM extensively.  After many years of doing professional Haskell
-development, he became interested in Python and dynamic language
-compilation, and is now involved in building innovative Python
-tools for a multi-core world.
+**Joel Stanley** is a staff software designer at SoundSpectrum, Inc. He has an academic and professional background in compilers, programming languages, simulation frameworks, formal methods, and high-assurance software.  Some of his past projects have used LLVM extensively.  After many years of doing professional Haskell development, he became interested in Python and dynamic language compilation, and is now involved in building innovative Python tools for a multi-core world. 
 
 Questions?
 ----------
