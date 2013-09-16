@@ -68,7 +68,7 @@ As of September 2013, we have implemented research prototypes of the following s
 Roadmap
 -------
 
-Replicant has undergone several major design iterations since its inception in March 2011. Nearly two years later, with the multi-threaded GC and lowest level C layers taking shape, early benchmarks demonstrate Replicant successfully executing certain categories of vanilla Python code, such as iterative algebraic computation. Since showing does more than telling, we will demonstrate Replicant's performance advantages in as many exciting and convincing ways as possible at PyCon 2014. Our PyCon 2014 live demos will consist of:
+Replicant has undergone several major design iterations since its inception in March 2012.  Nearly two years later, with the multi-threaded GC and lowest level C layers taking shape, early benchmarks demonstrate Replicant successfully executing certain categories of vanilla Python code, such as iterative algebraic computation. Since showing does more than telling, we will demonstrate Replicant's performance advantages in as many exciting and convincing ways as possible at PyCon 2014.  Our PyCon 2014 live demos will consist of:
 
 * A realtime fractal animation that runs in single thread mode (benchmarked against CPython), and the same animation in multi-threaded mode on a 4 or 8 core machine.
 
@@ -82,9 +82,9 @@ As of September 2013, work is focused on improving the performance of the GC imp
 
 With Replicant's design principles firmly established and presented in Spring 2014, the compiler front-end will be completely rewritten in Python (the research prototype is currently implemented in Haskell), with the expectation that it will eventually be able to bootstrap itself.  While the compiler is transformed from its Haskell prototype implementation to a more mature and Python-friendly state, the C/C++ runtime and support layers will continue to evolve, adding support for more language features and standard library support. By PyCon 2015, we anticipate the Replicant roadmap to be fully clear, having completed the lion's share of language support activities and having performed a bulk of the standard library implementation/porting activities.
 
-As the Replicant roadmap solidifies, all OS calls are planned to be sandboxes into an abstract set of "OS interfaces" that provide any and all calls into the OS (file system, synchronization, network, threads, time, processes, etc).  The set of OS interfaces applied to a Replicant execution context will naturally default to the set of C++ classes shipped with Replicant for the host platform (e.g. POSIX, Win32, linux), but offers an important level of abstraction for developers with sensitive security/sandboxing needs.  For example, suppose a DoD classified piece of software may require that it contains zero links/references to the OS network APIs.  Replicant can simply be set to use the stub OS network interface inlace of the standard OS network interface for the host platform.  Similarly, suppose a large financial institution requires that a particular utility records all file activity into a meta log.  In Replicant, this can be done and assured at a low-level by overriding the appropriate OS interfaces to additionally write out the appropriate metadata.  In sum, Replicant sandboxing offers powerful linking and security assurance, typically demanded by mission critical operations.
+As the Replicant roadmap solidifies, all OS calls are planned to be sandboxes into an abstract set of "OS interfaces" that provide any and all calls into the OS (file system, synchronization, network, threads, time, processes, etc).  The set of OS interfaces applied to a Replicant execution context will naturally default to the set of C++ classes shipped with Replicant for the host platform (e.g. POSIX, Win32, linux), but offers an important level of abstraction for developers with sensitive security/sandboxing needs.  For example, suppose a DoD classified piece of software requires that it contains zero links/references to the OS network APIs.  Replicant can simply be set to use the stub OS network interface inplace of the standard OS network interface for the host platform.  Similarly, suppose a financial institution requires that a particular utility records all file activity into a metalog.  In Replicant, this can be done and assured at a low-level by overriding the appropriate OS interfaces to additionally write out the appropriate metadata.  In sum, Replicant sandboxing will offer powerful and airtight linking and security assurance often demanded by mission critical operations.
 
-Further ahead on Replicant roadmap is to add minor syntax extensions and/or usage conventions to special "fat" primitives -- built-in vectors of primitives of variable dimensionality which are implicitly unsynchronized (think Python arrays but with added dimensionality and built-in usage extensions).  We believe this feature to be of great interest to scientific computing applications and is non-coincidentally an analog of the design pattern associated with how a multi-process computational engine gets and posts its data (i.e. though a large shared interprocess shared buffer with self-made conventions on which partitions are calculated by who).
+Further ahead on Replicant roadmap is to add minor syntax extensions and/or usage conventions to special "fat" primitives -- built-in vectors of primitives of variable dimensionality which are implicitly unsynchronized (think Python arrays but with added dimensionality and built-in usage extensions).  We believe this feature to be of great interest to scientific computing applications and is non-coincidentally an analog of the design pattern associated with how a multi-process computational performs high volume IPC (i.e. via a large interprocess shared buffer).
 
 
 Project Background
@@ -100,6 +100,9 @@ Design Philosophy
 -----------------
 
 Python's dynamic nature imposes significant challenges towards any Python implementation, and Replicant is no exception.  Our approach is therefore to regard rare or uncommon language usage cases as something that would place Replicant in a compatible (but potentially lower performing) mode that offers the support necessary for the language feature being invoked. To choose a small representative example, certain operations (e.g. exec()) may force a dictionary of locals to be created on demand, which may not have been needed otherwise during vanilla execution due to how the code was compiled).  
+
+Meanwhile, the LLVM ecosystem seems to becoming the defacto industry standard compiler.  This is consistent with news events such as FreeBSD dropping GCC support in 2012 in favor of LLVM or the fact that Apple has used LLVM as its default compiler since 2010.  As the new compiler standard, LLVM receives enterprise-level attention and support from the largest software and hardware companies, meaning that it will continue to make large strides forward in every layer of its components for years and decades to come.  So as LLVM grows and benefits from the enterprises that make up its ecosystem, Replicant will also receive those benefits.
+
 
 Operation Overview
 ------------------
@@ -149,12 +152,6 @@ When a Python script is run under Replicant (or when the embedding API module is
 7. Using the high-level RObject C/C++ support layer, explicit calls into the code fragment can now also occur (which can make calls back into the embedding app).
 
 8. When the code fragment is no longer referenced (i.e., when the owning RContext is destroyed), it may be released.
-
-
-Future Work
------------
-
- * As an industry standard, the LLVM ecosystem is becoming increasingly the defacto standard.   This is consistent with news events such as FreeBSD dropping GCC support in 2012 in favor of LLVM and that Apple has uses LLVM as the default since 2010.  As the new compiler standard, LLVM receives enterprise-level attention and support from the largest software and hardware companies, meaning that it will continue to make large strides forward in every part of its components.  As LLVM improves, so will all the ecosystem components built on LLVM, whether that's the performance of Objective C on an Apple iPhone 5S running on a 64-bit ARM A7 or the performance of compiled Replicant code running on a desktop architecture or the same ARM A7 on a mobile device.
 
  
 About the Authors
