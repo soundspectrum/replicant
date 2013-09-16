@@ -22,7 +22,7 @@ Replicant is a commercial-grade, LLVM-based Python compiler and execution enviro
 Introduction
 ------------
 
-In an era where high-powered, multi-core systems are available on every desktop, laptop, and now even on smartphones, it's increasingly clear that language implementations should support real multi-threading capabilities. Multi-threading is a viable and popular approach in many other languages, and it's an area where Python typically has unfortunately had to apologize.   Historically, Python code which requires concurrent execution uses fork() and interprocess communication (IPC), but this approach does not always yield the best performance for all workloads.  For example, IPC requires serialization of data structures, which can be cost prohibitive when data structures are intricate or unwieldy. Shared memory between forked processes may be an alternative to serialization in some cases, but this only helpful for large flat data structures, and isn't possible for particular classes of algorithms. Interprocess shared memory solutions also tend to complicate implementation since message passing is required to setup, communicate, and synchronize access to a shared memory region.
+In an era where high-powered, multi-core systems are available on every desktop, laptop, and now even on smartphones, it's increasingly clear that language implementations should support real multi-threading capabilities. Multi-threading is a viable and popular approach in many other languages, and it's an area where Python has typically had to apologize.   Historically, Python code which requires concurrent execution uses fork() and interprocess communication (IPC), but this approach does not always yield the best performance for all workloads.  For example, IPC requires serialization of data structures, which can be cost prohibitive when data structures are intricate or unwieldy. Shared memory between forked processes may be an alternative to serialization in some cases, but this only helpful for large flat data structures, and isn't possible for particular classes of algorithms. Interprocess shared memory solutions also tend to complicate implementation since message passing is required to setup, communicate, and synchronize access to a shared memory region.
 
 The standard CPython threading module offers support for threads, but there are significant caveats when performance is paramount. Specifically, since a global interpreter lock (GIL) is required to execute more than one thread safely in CPython, it's well understood that Python threads cannot execute even perfectly independent code concurrently (such as two threads each incrementing a non-shared integer value). Although C extension modules can release the GIL when the remaining work can be performed independently, in practice this requires careful extension module design and doesn't solve the GIL performance drawbacks when executing pure Python code.
 
@@ -46,7 +46,18 @@ Project Status
 
 As of September 2013, we have implemented research prototypes of the following subsystems:
 
- * A compiler front-end which reads Python input source and emits LLVM assembly text. The input AST is subjected to a series of transformations which lower the input code to a flattened IR which is more suitable for code generation. The resulting LLVM code relies heavily on the C runtime library and can be thought of as essentially a low-level C program. The implementation is far from feature-complete with respect to language support, but there is support for most forms of module, class, and function definitions, as well as core control flow constructs. The current compiler implementation is in Haskell, but a Python rewrite is planned as soon as the proof of concept benchmarks have met their objectives. We fully intend for Replicant to be able to boostrap itself.
+ * A compiler front-end which reads Python input source and emits LLVM assembly
+   text. The input AST is subjected to a series of transformations which lower
+   the input code to a flattened IR which is more suitable for code
+   generation. The resulting LLVM code relies heavily on the C runtime library
+   and can be thought of as essentially a low-level C program. The
+   implementation is far from feature-complete with respect to language support,
+   but there is support for most forms of module, class, and function
+   definitions, as well as core control flow constructs.
+
+   The current compiler implementation is in Haskell, but a Python rewrite is
+   planned as soon as the proof of concept benchmarks have met their
+   objectives. We fully intend for Replicant to be able to boostrap itself.
 
  * The low-level RObject runtime layer (written in C with some C++) which provides:
 
@@ -54,7 +65,7 @@ As of September 2013, we have implemented research prototypes of the following s
 
    * A low-level API for performing operations on RObjects (binary operations, invocation of callables, etc.). Accesses to RObjects are currently synchronized via a straightforward multiple-reader-single-writer concurrency scheme.
 
-   * An extensible concurrent mark-and-sweep garbage collector.
+   * An preliminary implementation of a concurrent mark-and-sweep garbage collector.
 
    * Execution context and thread management APIs.
 
@@ -68,24 +79,79 @@ As of September 2013, we have implemented research prototypes of the following s
 Roadmap
 -------
 
-Replicant has undergone several major design iterations since its inception in March 2012.  Nearly two years later, with the multi-threaded GC and lowest level C layers taking shape, early benchmarks demonstrate Replicant successfully executing certain categories of vanilla Python code, such as iterative algebraic computation. Since showing does more than telling, we will demonstrate Replicant's performance advantages in as many exciting and convincing ways as possible at PyCon 2014.  Our PyCon 2014 live demos will consist of:
+Replicant has undergone several major design iterations since its inception in
+March 2012.  Nearly two years later, with the multi-threaded GC and lowest level
+C layers taking shape, early benchmarks demonstrate Replicant successfully
+executing certain categories of vanilla Python code, such as iterative algebraic
+computation. Since showing does more than telling, we will demonstrate
+Replicant's performance advantages in as many exciting and convincing ways as
+possible at PyCon 2014.  Our PyCon 2014 live demos will consist of:
 
-* A realtime fractal animation that runs in single thread mode (benchmarked against CPython), and the same animation in multi-threaded mode on a 4 or 8 core machine.
+* A realtime fractal animation that runs in single thread mode (benchmarked
+  against CPython), and the same animation in multi-threaded mode on a 4 or 8
+  core machine.
 
 * A multi-threaded web server (designed for comparison against a forking web server).
 
-* A realtime demo that shows Replicant offering itself as a BSP (Bulk Synchronous Parallel) solution, a class of "big data" computation which causes IPC/forking models to struggle when the relative cost of data serialization is high.
+* A realtime demo that shows Replicant offering itself as a BSP (Bulk
+  Synchronous Parallel) solution, a class of "big data" computation which causes
+  IPC/forking models to struggle when the relative cost of data serialization is
+  high.
 
-As intuition might suggest, the amount of Python code for the above demos above are on the order of a page since their implementation relies on conventional multi-threading idioms.
+As intuition might suggest, the amount of Python code for the above demos above
+are on the order of a page since their implementation relies on conventional
+multi-threading idioms.
 
-As of September 2013, work is focused on improving the performance of the GC implementation, which borrows some notions from read-copy-update (RCU) approaches (as opposed to relying on heavyweight OS synchronization).  For example, Replicant executes the "straightline" Mandelbrot fractal code faster than CPython, but a version of the benchmark which uses functions to encapsulate code currently decreases execution performance significantly because of some deficiencies in the GC implementation.  We are excited about the performance gains we hope to obtain once we address the parts of GC which, until now, have been provisional in getting it up and running.
+As of September 2013, work is focused on improving the performance of the GC
+implementation, which borrows some notions from read-copy-update (RCU)
+approaches (as opposed to relying on heavyweight OS synchronization).  For
+example, Replicant executes the "straightline" Mandelbrot fractal code faster
+than CPython, but a version of the benchmark which uses functions to encapsulate
+code currently decreases execution performance significantly because of some
+deficiencies in the GC implementation.  We are excited about the performance
+gains we hope to obtain once we address the parts of GC which, until now, have
+been provisional in getting it up and running.
 
-With Replicant's design principles firmly established and presented in Spring 2014, the compiler front-end will be completely rewritten in Python (the research prototype is currently implemented in Haskell), with the expectation that it will eventually be able to bootstrap itself.  While the compiler is transformed from its Haskell prototype implementation to a more mature and Python-friendly state, the C/C++ runtime and support layers will continue to evolve, adding support for more language features and standard library support. By PyCon 2015, we anticipate the Replicant roadmap to be fully clear, having completed the lion's share of language support activities and having performed a bulk of the standard library implementation/porting activities.
+With Replicant's design principles firmly established and presented in Spring
+2014, the compiler front-end will be completely rewritten in Python (the
+research prototype is currently implemented in Haskell), with the expectation
+that it will eventually be able to bootstrap itself.  As we transition the
+compiler from the Haskell prototype to a more Python-friendly implementation,
+the C/C++ runtime and support layers will continue to evolve, adding support for
+more language features and standard library support. By PyCon 2015, we
+anticipate the Replicant roadmap to be fully clear, having completed the lion's
+share of language support activities and having performed a bulk of the standard
+library implementation/porting activities.
 
-As the Replicant roadmap solidifies, all OS calls are planned to be sandboxes into an abstract set of "OS interfaces" that provide any and all calls into the OS (file system, synchronization, network, threads, time, processes, etc).  The set of OS interfaces applied to a Replicant execution context will naturally default to the set of C++ classes shipped with Replicant for the host platform (e.g. POSIX, Win32, linux), but offers an important level of abstraction for developers with sensitive security/sandboxing needs.  For example, suppose a DoD classified piece of software requires that it contains zero links/references to the OS network APIs.  Replicant can simply be set to use the stub OS network interface inplace of the standard OS network interface for the host platform.  Similarly, suppose a financial institution requires that a particular utility records all file activity into a metalog.  In Replicant, this can be done and assured at a low-level by overriding the appropriate OS interfaces to additionally write out the appropriate metadata.  In sum, Replicant sandboxing will offer powerful and airtight linking and security assurance often demanded by mission critical operations.
+As the Replicant roadmap solidifies and the implementation matures, we will be
+able to explore additional features and capabilities which may enable novel and
+interesting uses of Replicant.
 
-Further ahead on Replicant roadmap is to add minor syntax extensions and/or usage conventions to special "fat" primitives -- built-in vectors of primitives of variable dimensionality which are implicitly unsynchronized (think Python arrays but with added dimensionality and built-in usage extensions).  We believe this feature to be of great interest to scientific computing applications and is non-coincidentally an analog of the design pattern associated with how a multi-process computational performs high volume IPC (i.e. via a large interprocess shared buffer).
+For example, we plan to experiment with "sandboxing" of OS calls into an
+abstract set of "OS interfaces" that provide any and all calls into the OS (file
+system, synchronization, network, threads, time, processes, etc).  The set of OS
+interfaces applied to a Replicant execution context will naturally default to
+the set of C++ classes shipped with Replicant for the host platform (e.g. POSIX,
+Win32, Linux), but offer an important level of abstraction for developers with
+sensitive security/separation needs.  For example, suppose that a security
+evaluation of a piece of classified software requires that it contains no calls
+into OS network APIs.  Replicant can simply be set to use the stub OS network
+interface in lieu of the standard OS network interface for the host platform,
+trapping certain calls.  Or suppose a financial institution requires that a
+particular utility records all file activity into an metalog.  In Replicant,
+this could be done at a low-level by overriding OS interfaces to additionally
+write out the appropriate metadata.  In summary, Replicant sandboxing will offer
+powerful and airtight linking and security assurance often demanded by mission
+critical operations.
 
+Further ahead on Replicant roadmap is the task of adding minor syntax extensions
+and/or usage conventions for working with special "fat" primitives -- built-in
+vectors of primitives (with variable dimensionality) which are implicitly
+unsynchronized (think Python arrays, but with added dimensionality and built-in
+usage extensions).  We believe this feature to be of great interest in
+scientific computing domains and it is non-coincidentally an analog of the
+design pattern associated with how a multi-process computation performs high
+volume IPC (i.e., via a large interprocess shared buffer).
 
 Project Background
 ------------------
@@ -101,7 +167,7 @@ Design Philosophy
 
 Python's dynamic nature imposes significant challenges towards any Python implementation, and Replicant is no exception.  Our approach is therefore to regard rare or uncommon language usage cases as something that would place Replicant in a compatible (but potentially lower performing) mode that offers the support necessary for the language feature being invoked. To choose a small representative example, certain operations (e.g. exec()) may force a dictionary of locals to be created on demand, which may not have been needed otherwise during vanilla execution due to how the code was compiled).  
 
-Meanwhile, the LLVM ecosystem seems to becoming the defacto industry standard compiler.  This is consistent with news events such as FreeBSD dropping GCC support in 2012 in favor of LLVM or the fact that Apple has used LLVM as its default compiler since 2010.  As the new compiler standard, LLVM receives enterprise-level attention and support from the largest software and hardware companies, meaning that it will continue to make large strides forward in every layer of its components for years and decades to come.  So as LLVM grows and benefits from the enterprises that make up its ecosystem, Replicant will also receive those benefits.
+Meanwhile, the LLVM ecosystem seems to becoming the de facto industry standard compiler.  This is consistent with news events such as FreeBSD's recent deprecation of GCC in favor of LLVM/clang and the fact that Apple has used LLVM as its default compiler technology since 2010.  As the new compiler standard, LLVM receives enterprise-level attention and support from the largest software and hardware companies, meaning that it will continue to make large strides forward in every layer of its components for years and decades to come.  So as LLVM grows and benefits from the enterprises that make up its ecosystem, Replicant will also receive those benefits.
 
 
 Operation Overview
