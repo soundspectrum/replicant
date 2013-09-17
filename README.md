@@ -19,6 +19,10 @@ Replicant is a commercial-grade, LLVM-based Python compiler and execution enviro
 
 * Commercial-grade implementation standards of compartmentalization, encapsulation, and reliability.
 
+
+![Replicant Logo](https://raw.github.com/soundspectrum/replicant/master/replicant-logo.png) 
+
+
 Introduction
 ------------
 
@@ -57,7 +61,7 @@ As of September 2013, we have implemented research prototypes of the following s
 
    The current compiler implementation is in Haskell, but a Python rewrite is
    planned as soon as the proof of concept benchmarks have met their
-   objectives. We fully intend for Replicant to be able to boostrap itself.
+   objectives. We fully intend for Replicant to be able to bootsrap itself.
 
  * The low-level RObject runtime layer (written in C with some C++) which provides:
 
@@ -230,5 +234,9 @@ About the Authors
 Questions?
 ----------
 
-Are you interested in Replicant? Would you like to know more or make suggestions for the development team? Please feel free to e-mail jstanley@soundspectrum.com with your questions. 
+Are you interested in Replicant?  Would you like to know more or contribute?  Please e-mail replicant@soundspectrum.com. 
+
+
+![Replicant Logo](https://raw.github.com/soundspectrum/replicant/master/replicant-logo.png) 
+*We're not computers, Sebastian, we're physical.*
 
