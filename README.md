@@ -1,8 +1,8 @@
 Replicant
 =========
 
-![Rachel Replicant](https://raw.github.com/soundspectrum/replicant/master/replicant.jpg) 
-                        "Do you like our owl?"
+![Rachael Replicant](https://raw.github.com/soundspectrum/replicant/master/replicant.jpg) 
+*Do you like our owl?*
 
 What is Replicant?
 ------------------
