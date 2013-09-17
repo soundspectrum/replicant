@@ -1,7 +1,7 @@
 Replicant
 =========
 
-![Rachael Replicant](https://raw.github.com/soundspectrum/replicant/master/replicant.jpg) 
+![Rachael Replicant](https://raw.github.com/soundspectrum/replicant/master/replicant.jpg)
 *Do you like our owl?*
 
 What is Replicant?
@@ -19,8 +19,6 @@ Replicant is a commercial-grade, LLVM-based Python compiler and execution enviro
 
 * Commercial-grade implementation standards of compartmentalization, encapsulation, and reliability.
 
-
-![Replicant Logo](https://raw.github.com/soundspectrum/replicant/master/replicant-logo.png) 
 
 
 Introduction
@@ -238,5 +236,6 @@ Are you interested in Replicant?  Would you like to know more or contribute?  Pl
 
 
 ![Replicant Logo](https://raw.github.com/soundspectrum/replicant/master/replicant-logo.png) 
+
 *We're not computers, Sebastian, we're physical.*
 
