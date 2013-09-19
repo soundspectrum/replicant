@@ -2,7 +2,7 @@ Replicant
 =========
 
 ![Rachael Replicant](https://raw.github.com/soundspectrum/replicant/master/replicant.jpg)
-*Do you like our owl?*
+*"Do you like our owl?"*
 ~ Rachael, *Blade Runner* (1982)
 
 What is Replicant?
@@ -245,5 +245,5 @@ Want to know more about Replicant or contribute?  Please e-mail replicant@sounds
 
 ![Replicant Logo](https://raw.github.com/soundspectrum/replicant/master/replicant-logo.png) 
 
-*It's too bad she won't live.  Then again, who does.*
+*"It's too bad she won't live.  Then again, who does."*
 
