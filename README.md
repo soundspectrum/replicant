@@ -234,7 +234,7 @@ About the Authors
 Why "Replicant"?
 ----------------
 
-A "replicant" is a term in Ridley Scott's 1982 film *Blade Runner* that refers to an artificially created human being.  In the film, replicants are endowed with most or all the qualities and characteristics that most people today would associate with the words "human" and "sentient", so much so that some of their faculties were also designed to exceed the level of their creators.  Although replicants were created to perform jobs and roles that most would be unwilling or unable to do, they were treated as no more than machines and property, requiring "retirement" once they were obsolete or became too self-aware.  Replicants resisting retirement were met with lethal hostility, forcing some of them to reflect on justice and their role in the universe -- in their own tragic, individualized, and constrained way.
+*Replicant* is a term in Ridley Scott's 1982 film *Blade Runner* that refers to an artificially created human being.  In the film, replicants are endowed with most or all the characteristics that most people today would associate with the words "human", so much so that some of their faculties were designed to exceed the level of their creators.  Although replicants were created to perform jobs and roles that most would be unwilling or unable to do, they were treated as no more than machines and property, requiring "retirement" once they were obsolete or became too self-aware.  Replicants resisting retirement were met with lethal hostility, forcing some of them to reflect on justice and their role in the universe -- in their own tragic, individualized, and constrained way.
 
 
 Questions?
@@ -245,5 +245,5 @@ Want to know more about Replicant or contribute?  Please e-mail replicant@sounds
 
 ![Replicant Logo](https://raw.github.com/soundspectrum/replicant/master/replicant-logo.png) 
 
-*"It's too bad she won't live.  Then again, who does."*
+*"It's too bad she won't live...but then again, who does."*
 
