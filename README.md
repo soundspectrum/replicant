@@ -3,6 +3,7 @@ Replicant
 
 ![Rachael Replicant](https://raw.github.com/soundspectrum/replicant/master/replicant.jpg)
 *Do you like our owl?*
+~ Rachael, *Blade Runner* (1982)
 
 What is Replicant?
 ------------------
@@ -229,13 +230,20 @@ About the Authors
 
 **Joel Stanley** is a staff software designer at SoundSpectrum, Inc. He has an academic and professional background in compilers, programming languages, simulation frameworks, formal methods, and high-assurance software. Some of his past projects have used LLVM extensively. After many years of doing professional Haskell development, he became interested in Python and dynamic language compilation, and is now involved in building innovative Python tools for a multi-core world. 
 
+
+Why "Replicant"?
+----------------
+
+A "replicant" is a term in Ridley Scott's 1982 film *Blade Runner* that refers to an artificially created human being.  In the film, replicants are endowed with most or all the qualities and characteristics that most people today would associate with the words "human" and "sentient", so much so that some of their faculties were also designed to exceed the level of their creators.  Although replicants were created to perform jobs and roles that most would be unwilling or unable to do, they were treated as no more than machines and property, requiring "retirement" once they were obsolete or became too self-aware.  Replicants resisting retirement were met with lethal hostility, forcing some of them to reflect on justice and their role in the universe -- in their own tragic, individualized, and constrained way.
+
+
 Questions?
 ----------
 
-Are you interested in Replicant?  Would you like to know more or contribute?  Please e-mail replicant@soundspectrum.com. 
+Want to know more about Replicant or contribute?  Please e-mail replicant@soundspectrum.com. 
 
 
 ![Replicant Logo](https://raw.github.com/soundspectrum/replicant/master/replicant-logo.png) 
 
-*We're not computers, Sebastian, we're physical.*
+*It's too bad she won't live.  Then again, who does.*
 
