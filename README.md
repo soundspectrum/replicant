@@ -25,7 +25,7 @@ Replicant is a commercial-grade, LLVM-based Python compiler and execution enviro
 Introduction
 ------------
 
-In an era where high-powered, multi-core systems are available on every desktop, laptop, and now even on smartphones, it's increasingly clear that language implementations should support real multi-threading capabilities. Multi-threading is a viable and popular approach in many other languages, and it's an area where Python has typically had to apologize.   Historically, Python code which requires concurrent execution uses fork() and interprocess communication (IPC), but this approach does not always yield the best performance for all workloads.  For example, IPC requires serialization of data structures, which can be cost prohibitive when data structures are intricate or unwieldy. Shared memory between forked processes may be an alternative to serialization in some cases, but this only helpful for large flat data structures, and isn't possible for particular classes of algorithms. Interprocess shared memory solutions also tend to complicate implementation since message passing is required to setup, communicate, and synchronize access to a shared memory region.
+In an era where high-powered, multi-core systems are available on every desktop, laptop, and now even on smartphones, it's increasingly clear that language implementations should support real multi-threading capabilities. Multi-threading is a viable and popular approach in many other languages, and it's an area where Python has typically had to apologize.   Historically, Python code which requires concurrent execution uses fork() and interprocess communication (IPC), but this approach does not always yield the best performance for all workloads.  For example, IPC requires serialization of data structures, which can be cost prohibitive when data structures are intricate or unwieldy. Shared memory between forked processes may be an alternative to serialization in some cases, but this is only helpful for large flat data structures, and isn't possible for particular classes of algorithms. Interprocess shared memory solutions also tend to complicate implementation since message passing is required to set up, communicate, and synchronize access to a shared memory region.
 
 The standard CPython threading module offers support for threads, but there are significant caveats when performance is paramount. Specifically, since a global interpreter lock (GIL) is required to execute more than one thread safely in CPython, it's well understood that Python threads cannot execute even perfectly independent code concurrently (such as two threads each incrementing a non-shared integer value). Although C extension modules can release the GIL when the remaining work can be performed independently, in practice this requires careful extension module design and doesn't solve the GIL performance drawbacks when executing pure Python code.
 
@@ -60,7 +60,7 @@ As of September 2013, we have implemented research prototypes of the following s
 
    The current compiler implementation is in Haskell, but a Python rewrite is
    planned as soon as the proof of concept benchmarks have met their
-   objectives. We fully intend for Replicant to be able to bootsrap itself.
+   objectives.  We fully intend for Replicant to be able to bootstrap itself.
 
  * The low-level RObject runtime layer (written in C with some C++) which provides:
 
@@ -101,7 +101,7 @@ possible at PyCon 2014.  Our PyCon 2014 live demos will consist of:
   IPC/forking models to struggle when the relative cost of data serialization is
   high.
 
-As intuition might suggest, the amount of Python code for the above demos above
+As intuition might suggest, the amount of Python code for the demos above
 are on the order of a page since their implementation relies on conventional
 multi-threading idioms.
 
@@ -161,7 +161,7 @@ Project Background
 
 Python originated in an earlier era of computing wherein the longer term implications of certain design choices (e.g., the presence of GIL, a refcount-based objects, etc.) were not apparent. As a result, for example, it is common for C extension modules to use static variables to store module-global values and data structures, making them inherently global in nature (and therefore difficult to multiply instantiate in a hypothetical environment where independent interpreter contexts are the norm).
 
-SoundSpectrum, the company funding Replicant development, has been authoring and selling real-time music visualization software for over ten years.  Although SoundSpectrum focuses on retail sales, its software has been licensed for use by Apple, Microsoft, and various live production tours.  Starting with the Aeon visualizer, SoundSpectrum began to embedding Python heavily to facilitate visual content creation.  SoundSpectrum's C/C++ codebase is over 15 years in its evolution and is best characterized as a codebase you'd expect to see in a large video game production house.  SoundSpectrum's codebase implements a large performance-oriented class set for both Windows and OS X, using major APIs such as Direct3D, OpenGL, Cocoa/CF, and Win32.
+SoundSpectrum, the company funding Replicant development, has been authoring and selling real-time music visualization software for over ten years.  Although SoundSpectrum focuses on retail sales, its software has been licensed for use by Apple, Microsoft, and various live production tours.  Starting with the Aeon visualizer, SoundSpectrum began to embed Python heavily to facilitate visual content creation.  SoundSpectrum's C/C++ codebase is over 15 years in its evolution and is best characterized as a codebase you'd expect to see in a large video game production house.  SoundSpectrum's codebase implements a large performance-oriented class set for both Windows and OS X, using major APIs such as Direct3D, OpenGL, Cocoa/CF, and Win32.
 
 In the course of content creation in Aeon, Python runtime performance became an increasing concern, and SoundSpectrum's engineering leadership developed an increasing interest in using independently executing interpreters in other threads to improve performance and remove real-time latency issues.  In particular, simple arithmetic in tight loops would adversely affect performance enough to be noticeable in real-time, and competition for the GIL limited multi-core performance of fundamentally independent functionality that in principle should execute in separate interpreter instances without interference.  After much back and forth on the Python listserv, Andy O'Meara set out to actively explore new implementation possibilities.
 
@@ -170,7 +170,7 @@ Design Philosophy
 
 Python's dynamic nature imposes significant challenges towards any Python implementation, and Replicant is no exception.  Our approach is therefore to regard rare or uncommon language usage cases as something that would place Replicant in a compatible (but potentially lower performing) mode that offers the support necessary for the language feature being invoked. To choose a small representative example, certain operations (e.g. exec()) may force a dictionary of locals to be created on demand, which may not have been needed otherwise during vanilla execution due to how the code was compiled).  
 
-Meanwhile, the LLVM ecosystem seems to becoming the de facto industry standard compiler.  This is consistent with news events such as FreeBSD's recent deprecation of GCC in favor of LLVM/clang and the fact that Apple has used LLVM as its default compiler technology since 2010.  As the new compiler standard, LLVM receives enterprise-level attention and support from the largest software and hardware companies, meaning that it will continue to make large strides forward in every layer of its components for years and decades to come.  So as LLVM grows and benefits from the enterprises that make up its ecosystem, Replicant will also receive those benefits.
+Meanwhile, the LLVM ecosystem is becoming the de facto industry-standard compiler.  This is consistent with news events such as FreeBSD's recent deprecation of GCC in favor of LLVM/clang and the fact that Apple has used LLVM as its default compiler technology since 2010.  As the new compiler standard, LLVM receives enterprise-level attention and support from the largest software and hardware companies, meaning that it will continue to make large strides forward in every layer of its components for years and decades to come.  So as LLVM grows and benefits from the enterprises that make up its ecosystem, Replicant will also receive those benefits.
 
 
 Operation Overview
@@ -234,7 +234,7 @@ About the Authors
 Why "Replicant"?
 ----------------
 
-*Replicant* is a term in Ridley Scott's 1982 film *Blade Runner* that refers to an artificially created human being.  In the film, replicants are endowed with most or all the characteristics that most people today would associate with the words "human", so much so that some of their faculties were designed to exceed the level of their creators.  Although replicants were created to perform jobs and roles that most would be unwilling or unable to do, they were treated as no more than machines and property, requiring "retirement" once they were obsolete or became too self-aware.  Replicants resisting retirement were met with lethal hostility, forcing some of them to reflect on justice and their role in the universe -- in their own tragic, individualized, and constrained way.
+*Replicant* is a term in Ridley Scott's 1982 film *Blade Runner* that refers to an artificially created human being.  In the film, replicants are endowed with almost all of the characteristics that most people today would associate with the word "human", so much so that some of their faculties were designed to exceed the level of their creators.  Although replicants were created to perform jobs and roles that most would be unwilling or unable to do, they are treated as no more than machines and property, requiring terminal "retirement" once they were obsolete or became too self-aware.  Replicants resisting retirement are met with lethal hostility, forcing some of them to reflect on justice and their role in the universe -- in their own tragic, individualized, and constrained way.
 
 
 Questions?
