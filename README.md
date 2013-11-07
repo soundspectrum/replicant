@@ -42,7 +42,7 @@ Replicant's primary objectives are to provide a Python front-end and runtime env
 Project Codebase
 ----------------
 
-Replicant is being developed with the resources of SoundSpectrum, a small music visualization software company with just enough resources to devote to a project originating from a passion and vision to see the Python implementation taken to a higher level (see the 'Project Background' section). While SoundSpectrum is interested in sharing its work on Replicant in ways consistent with open source ideals, SoundSpectrum is also interested receiving a fair share of the fruits of the resources spent and the risks taken while designing and developing Replicant. So until Replicant's future and performance becomes more clear, SoundSpectrum is deferring public release of the Replicant codebase until at least Spring 2014, or until SoundSpectrum has otherwise finished exploring its licensing options.
+Replicant is being developed with the resources of SoundSpectrum, a small music visualization software company with just enough resources to devote to a project originating from a passion and vision to see the Python implementation taken to a higher level (see the 'Project Background' section).  While SoundSpectrum wants to share its hard work in ways consistent with open source ideals, SoundSpectrum also naturally wants to support costs and past expenses associated with the development of Replicant, allowing continued development into the future.  Sometime after Spring 2014, SoundSpectrum intends to release Replicant under the GNU Public License (GPL) while offering advanced features, tools, and support at set rates.
 
 Project Status
 --------------
