@@ -149,8 +149,8 @@ C layers taking shape, early benchmarks demonstrate Replicant successfully
 executing certain categories of vanilla Python code, such as iterative algebraic
 computation.  Since showing is more useful than telling, our next steps involve
 crafting a set of small application prototypes to demonstrate Replicant's
-performance advantages in any many exciting convincing ways as possible.  We are
-currently planning on developing the following proof of concept demos:
+performance advantages in any many exciting convincing ways as possible.  In 
+principle, we have completed the following proof-of-concept demos:
 
 * A realtime fractal animation that runs in single thread mode (benchmarked
   against CPython), and the same animation in multi-threaded mode on a 4 or 8
