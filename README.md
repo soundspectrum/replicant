@@ -92,9 +92,9 @@ a higher level (see the 'Project Background' section).  While SoundSpectrum
 wants to share its hard work in ways consistent with open source ideals,
 SoundSpectrum also naturally wants to support costs and past expenses associated
 with the development of Replicant, allowing continued development into the
-future.  In 2014, SoundSpectrum intends to release Replicant under the GNU
-Public License (GPL) while offering advanced features, tools, and support at set
-rates.
+future.  For this reason, SoundSpectrum is currently considering its licensing
+options for Replicant, and will update this notice when those options have been
+explored.
 
 Project Status
 --------------
